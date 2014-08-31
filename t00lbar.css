@@ -1,0 +1,20 @@
+.toolbar {
+	background-color: #D6EBFF;
+	height: 80px;
+	padding: 5px;
+}
+
+.toolbar-item {
+	display: inline-block;
+	background-color: #0F2E4C;
+	height: 80px;
+	width: 40px;
+}
+
+.activated {
+	background-color: orange;
+}
+
+.disabled {
+	background-color: gray;
+}
