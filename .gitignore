@@ -1,4 +1,8 @@
 TODO
 *.html
+!index.html
 *.css
+!t00lbar.css
+*.js
+!t00lbar.js
 *.txt
