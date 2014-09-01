@@ -5,39 +5,41 @@ var t00lbar = (function (t00lbar) {
 		var items = [];
 
 		Array.prototype.forEach.call(itemElements, function (element, index, array) {
-			var item = {
-				element : element,
-				enable : function () {
-					this.element.classList.remove("disabled");
+
+			var item = {};
+
+			Object.defineProperties(item, {
+				element : {
+					value : element,
+					writable : false
 				},
-				disable : function () {
-					this.element.classList.add("disabled");
-				},
-				isDisabled : function () {
-					if ( element.classList.contains("disabled") ) {
-						return true;
-					} else {
-						return false;
+				enabled : {
+					get : function () {
+						return !this.element.classList.contains("disabled");
+					},
+					set : function (value) {
+						if (value) {
+							this.element.classList.remove("disabled");
+						} else {
+							this.element.classList.add("disabled");
+						}
 					}
 				},
-				activate : function () {
-					if ( !this.isDisabled() ) {
-						this.element.classList.add("activated");
-					}
-				},
-				deactivate : function () {
-					if ( !this.isDisabled() ) {
-						this.element.classList.remove("activated");
-					}
-				},
-				isActivated : function () {
-					if ( this.element.classList.contains("activated") ) {
-						return true;
-					} else {
-						return false;
-					}
+				activated : {
+					get : function () {
+						return this.element.classList.contains("activated");
+					},
+					set : function (value) {
+						if (this.enabled) {
+							if (value) {
+								return this.element.classList.add("activated");
+							} else {
+								return this.element.classList.remove("activated");
+							}
+						}
+					},
 				}
-			};
+			});
 
 			items.push(item);
 		});
