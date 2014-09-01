@@ -64,12 +64,39 @@ var t00lbar = (function (t00lbar) {
 		};
 		
 		var items = element.querySelectorAll(".toolbar-item");
-		
-		return {
-			items : createToolbarItems(items)
+
+		var toolbar = {
+			add : function () {
+				var newSpan = document.createElement("span");
+				newSpan.className = "toolbar-item";
+
+				this.element.appendChild(newSpan);
+
+				var item = createToolbarItem(newSpan);
+
+				this.items.push(item);
+			},
+			remove : function () {
+				// to be implemented
+			},
+			appendTo : function (parentElement) {
+				parentElement.appendChild(this.element);
+			}
 		};
+		
+		Object.defineProperties(toolbar, {
+			element : {
+				value : element
+			},
+			items : {
+				value : createToolbarItems(items)
+			}
+		});
+
+		return toolbar;
 	};
 
 	return t00lbar;
 
 }( t00lbar || {} ));
+
