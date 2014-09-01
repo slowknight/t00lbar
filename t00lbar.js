@@ -1,46 +1,51 @@
 var t00lbar = (function (t00lbar) {
 
+	var createToolbarItem = function (element) {
+		
+		var item = {};
+
+		Object.defineProperties(item, {
+			element : {
+				value : element,
+				writable : false
+			},
+			enabled : {
+				get : function () {
+					return !this.element.classList.contains("disabled");
+				},
+				set : function (value) {
+					if (value) {
+						this.element.classList.remove("disabled");
+					} else {
+						this.element.classList.add("disabled");
+					}
+				}
+			},
+			activated : {
+				get : function () {
+					return this.element.classList.contains("activated");
+				},
+				set : function (value) {
+					if (this.enabled) {
+						if (value) {
+							return this.element.classList.add("activated");
+						} else {
+							return this.element.classList.remove("activated");
+						}
+					}
+				},
+			}
+		});
+
+		return item;
+	};
+
 	var createToolbarItems = function (itemElements) {
 		
 		var items = [];
 
 		Array.prototype.forEach.call(itemElements, function (element, index, array) {
-
-			var item = {};
-
-			Object.defineProperties(item, {
-				element : {
-					value : element,
-					writable : false
-				},
-				enabled : {
-					get : function () {
-						return !this.element.classList.contains("disabled");
-					},
-					set : function (value) {
-						if (value) {
-							this.element.classList.remove("disabled");
-						} else {
-							this.element.classList.add("disabled");
-						}
-					}
-				},
-				activated : {
-					get : function () {
-						return this.element.classList.contains("activated");
-					},
-					set : function (value) {
-						if (this.enabled) {
-							if (value) {
-								return this.element.classList.add("activated");
-							} else {
-								return this.element.classList.remove("activated");
-							}
-						}
-					},
-				}
-			});
-
+			var item = createToolbarItem(element);
 			items.push(item);
 		});
 
@@ -55,6 +60,7 @@ var t00lbar = (function (t00lbar) {
 		if (!element) {
 			element = document.createElement("div");
 			element.id = elementId;
+			element.className = "toolbar";
 		};
 		
 		var items = element.querySelectorAll(".toolbar-item");
