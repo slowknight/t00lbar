@@ -76,8 +76,20 @@ var t00lbar = (function (t00lbar) {
 
 				this.items.push(item);
 			},
-			remove : function () {
-				// to be implemented
+			remove : function (index) {
+				var len = this.items.length;
+
+				index = (typeof index === 'undefined') ? (len - 1) : index;
+				
+				if (index < 0 || index >=len) {
+					throw new Error("index provided is out of range.");
+				}
+				
+				var item = this.items[index];
+				
+				this.items.splice(index, 1);
+				
+				this.element.removeChild(item.element);
 			},
 			appendTo : function (parentElement) {
 				parentElement.appendChild(this.element);
