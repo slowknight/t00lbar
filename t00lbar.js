@@ -1,12 +1,14 @@
 var t00lbar = (function (t00lbar) {
 
 	var Item = function (element) {
+		Eventory.call(this);
+
 		Object.defineProperty(this, "element", {
 			value : element
 		});
 	};
 
-	Object.defineProperties(Item.prototype, {
+	Item.prototype = Object.create(Eventory.prototype, {
 		enabled : {
 			get : function () {
 				return !this.element.classList.contains("disabled");
@@ -25,11 +27,23 @@ var t00lbar = (function (t00lbar) {
 			},
 			set : function (value) {
 				if (this.enabled) {
-					if (value) {
-						return this.element.classList.add("activated");
-					} else {
-						return this.element.classList.remove("activated");
+
+					var current = this.activated;
+
+					if (current === value) {
+						return;
 					}
+
+					if (value) {
+						this.element.classList.add("activated");
+					} else {
+						this.element.classList.remove("activated");
+					}
+
+					// Trigger event associated with 'activated status' toggle
+					this.trigger({
+						type : "activeToggled"
+					});
 				}
 			}
 		}
@@ -48,6 +62,8 @@ var t00lbar = (function (t00lbar) {
 	};
 
 	var Toolbar = function (element) {
+		Eventory.call(this);
+
 		var items = element.querySelectorAll(".toolbar-item");
 
 		Object.defineProperties(this, {
@@ -60,7 +76,7 @@ var t00lbar = (function (t00lbar) {
 		});
 	};
 
-	Object.defineProperties(Toolbar.prototype, {
+	Toolbar.prototype = Object.create(Eventory.prototype, {
 		add : {
 			value : function () {
 				var newSpan = document.createElement("span");
