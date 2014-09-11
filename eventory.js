@@ -32,10 +32,11 @@ Object.defineProperties(Eventory.prototype, {
 	},
 
 	trigger : {
-		value : function (event) {
-			if (typeof event.type === "undefined") {
-				throw new Error("The event object needs a 'type' property.");
+		value : function (event) {	
+			if ( !(event instanceof EventType) ) {
+				throw new Error("Event object is of incorrect type.");
 			}
+
 			if (typeof event.target === "undefined") {
 				event.target = this;
 			}
@@ -52,5 +53,14 @@ Object.defineProperties(Eventory.prototype, {
 		}
 	}
 });
+
+var EventType = function (type) {
+	if (typeof type !== "string") {
+		throw new Error("The event type must be a string.");
+	}
+	Object.defineProperty(this, "type", {
+		value : type
+	});
+};
 
 
