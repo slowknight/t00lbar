@@ -1,5 +1,15 @@
 var t00lbar = (function (t00lbar) {
 
+	var ValueToggleEvent = function (type, value) {
+		EventType.call(this, type);
+
+		Object.defineProperty(this, "value", {
+			value : value
+		});
+	};
+
+	ValueToggleEvent.prototype = Object.create(EventType.prototype);
+
 	var Item = function (element) {
 		Eventory.call(this);
 
@@ -41,9 +51,7 @@ var t00lbar = (function (t00lbar) {
 					}
 
 					// Trigger event associated with 'activated status' toggle
-					this.trigger({
-						type : "activeToggled"
-					});
+					this.trigger(new ValueToggleEvent("activeToggled", value));
 				}
 			}
 		}
