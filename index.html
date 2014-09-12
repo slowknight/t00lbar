@@ -12,7 +12,28 @@
 		<span class="toolbar-item"></span>
 		<span class="toolbar-item"></span>
 	</div>
-
+	
+	<script src="eventory.js"></script>
 	<script src="t00lbar.js"></script>
+
+	<script>
+
+		var theToolbar = t00lbar.createToolbar("myToolbar");
+
+		var listener1 = function (event) {
+			alert("Listener 1 does something");
+		};
+
+		var listener2 = function (event) {
+			alert("Listener 2 does something");
+		};
+
+		theToolbar.items[0].attachEventListener("activeToggled", listener1);
+		
+		theToolbar.items[0].attachEventListener("activeToggled", listener2);
+
+		theToolbar.items[0].detachEventListener("activeToggled", listener1);
+
+	</script>
 </body>
 </html>
